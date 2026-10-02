@@ -1,0 +1,23 @@
+name: Furio
+
+on:
+  pull_request:
+    paths: ['.architecture/**']
+  push:
+    branches: [main]
+    paths: ['.architecture/**', '.github/workflows/furio.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: getfurio/furio@main
+        with:
+          # The published map: references to other repos are checked against it.
+          model: https://furio-demo.github.io/catalog/model.json
